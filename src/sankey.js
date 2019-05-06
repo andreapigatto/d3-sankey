@@ -161,7 +161,7 @@ export default function() {
       if (node.xPos || node.xPos === 0) {
         // Max xPos considering all nodes
         max_xPos = Math.max(max_xPos, node.xPos);
-        console.log("MAX_XPOS", max_xPos);
+        //console.log("MAX_XPOS", max_xPos);
 
         // If first loop
         if (x === 0) {
@@ -173,12 +173,12 @@ export default function() {
           //console.log("DEPTH", node.depth);
           //console.log("-----------------");
         } else {
-          console.log(node, " OUT OF RANGE")
+          //console.log(node, " OUT OF RANGE")
         }
       }
       else
       {
-        console.log("NORMAL MODE")
+        //console.log("NORMAL MODE")
         node.depth = x;
       }
 
@@ -277,7 +277,7 @@ export default function() {
     var columns = columns_pre_1
         .map(function(d) { return d.values; });*/
 
-    console.log("COLUMNS_INIT", columns);
+    //console.log("COLUMNS_INIT", columns);
 
     initializeNodeBreadth();
     resolveCollisions();
@@ -289,60 +289,60 @@ export default function() {
     }
 
     function initializeNodeBreadth() {
-      console.log("START", columns);
+      //console.log("START", columns);
       var ky_inside = y1;
       var ky = min(columns, function (nodes) {
         if (nodes[0].xPos || nodes[0].xPos === 0) {
           nodes.forEach(function (node, i) {
             var processId = 0;
-            console.log("NODE", node)
-            console.log("TARGET_LINK", node.targetLinks[0])
-            console.log("SOURCE_SOURCE", node.sourceLinks[0])
+            //console.log("NODE", node)
+            //console.log("TARGET_LINK", node.targetLinks[0])
+            //console.log("SOURCE_SOURCE", node.sourceLinks[0])
             if (node.targetLinks[0])
               processId = node.targetLinks[0].process.id
             else if (node.sourceLinks[0])
               processId = node.sourceLinks[0].process.id
-            console.log("PROCESSID", (processId + 1))
-            console.log("EXP2", (y1 - y0 - (processId) * py) / (processId + 1))
-            console.log("y1", y1)
-            console.log("y0", y0)
+            //console.log("PROCESSID", (processId + 1))
+            //console.log("EXP2", (y1 - y0 - (processId) * py) / (processId + 1))
+            //console.log("y1", y1)
+            //console.log("y0", y0)
             var exp = (y1 - y0 - (processId) * py) / (processId + 1)
             if (exp < ky_inside)
               ky_inside = exp
           })
           return ky_inside
         } else {
-          console.log("LENGTH", nodes.length)
-          console.log("SUM", sum(nodes, value))
-          console.log("y1", y1)
-          console.log("y0", y0)
-          console.log("EXP", (y1 - y0 - (nodes.length - 1) * py) / sum(nodes, value))
+          //console.log("LENGTH", nodes.length)
+          //console.log("SUM", sum(nodes, value))
+          //console.log("y1", y1)
+          //console.log("y0", y0)
+          //console.log("EXP", (y1 - y0 - (nodes.length - 1) * py) / sum(nodes, value))
           return (y1 - y0 - (nodes.length - 1) * py) / sum(nodes, value);
         }
       });
 
-      console.log("KY", ky)
+      //console.log("KY", ky)
 
       columns.forEach(function (nodes) {
         nodes.forEach(function (node, i) {
           if (node.xPos || node.xPos === 0) {
             var processId = 0;
-            console.log("TARGET_LINK", node.targetLinks[0])
-            console.log("SOURCE_SOURCE", node.sourceLinks[0])
+            //console.log("TARGET_LINK", node.targetLinks[0])
+            //console.log("SOURCE_SOURCE", node.sourceLinks[0])
             if (node.targetLinks[0])
               processId = node.targetLinks[0].process.id
             else if (node.sourceLinks[0])
               processId = node.sourceLinks[0].process.id
             node.y1 = (node.y0 = processId) + node.value * ky;
-            console.log("NODE", node)
-            console.log("NODEy1", node.y1)
-            console.log("NODEy0", node.y0)
+            //console.log("NODE", node)
+            //console.log("NODEy1", node.y1)
+            //console.log("NODEy0", node.y0)
           } else {
             nodes.forEach(function (node, i) {
               node.y1 = (node.y0 = i) + node.value * ky;
-              console.log("NODE", node)
-              console.log("NODEy1", node.y1)
-              console.log("NODEy0", node.y0)
+              //console.log("NODE", node)
+              //console.log("NODEy1", node.y1)
+              //console.log("NODEy0", node.y0)
             });
           }
         });
@@ -383,14 +383,14 @@ export default function() {
             n = nodes.length,
             i;
 
-        console.log("N", n);
+        //console.log("N", n);
 
         // Push any overlapping nodes down.
         nodes.sort(ascendingBreadth);
 
         if (nodes[0].xPos || nodes[0].xPos === 0) {
           nodes.forEach(function (node, i) {
-            console.log("NODE FINAL", node);
+            //console.log("NODE FINAL", node);
             var processId = 0;
             if (node.targetLinks[0])
               processId = node.targetLinks[0].process.id
@@ -398,11 +398,11 @@ export default function() {
               processId = node.sourceLinks[0].process.id
 
             for (i = 0; i < (processId + 1); ++i) {
-              console.log("Y_INIT", y);
+              //console.log("Y_INIT", y);
               dy = y - node.y0;
               if (dy > 0) node.y0 += dy, node.y1 += dy;
               y = node.y1 + py;
-              console.log("Y_FINAL", y);
+              //console.log("Y_FINAL", y);
             }
 
             // If the bottommost node goes outside the bounds, push it back up.
@@ -424,11 +424,11 @@ export default function() {
         else {
           for (i = 0; i < n; ++i) {
             node = nodes[i];
-            console.log("Y_INIT", y);
+            //console.log("Y_INIT", y);
             dy = y - node.y0;
             if (dy > 0) node.y0 += dy, node.y1 += dy;
             y = node.y1 + py;
-            console.log("Y_FINAL", y);
+            //console.log("Y_FINAL", y);
           }
 
           // If the bottommost node goes outside the bounds, push it back up.
